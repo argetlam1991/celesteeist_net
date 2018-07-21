@@ -1,0 +1,25 @@
+<div layout="row" fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="0.5%" fxLayoutAlign="center">
+  <div fxFlex="80%">
+  <form #TitleForm="ngForm" (ngSubmit)="submit()">
+    <div fxLayout="row" fxLayoutAlign="end">
+    <mat-form-field fxFlex="100%">
+      <input matInput type="text" placeholder="title" fxFlex="100%"
+             required
+             [(ngModel)]="title" name="title">
+    </mat-form-field>
+    </div>
+    <br>
+    <quill-editor (onEditorCreated)="editorOnInit($event)"
+                  (onContentChanged)="content=$event"></quill-editor>
+    <br>
+    <div fxLayout="row" fxLayoutAlign="end">
+      <div fxFlex="10%">
+        <a mat-button mat-fab color="secondary" routerLink="/article-list">Cancel</a>
+      </div>
+      <div fxFlex="10%">
+        <button mat-button mat-fab color="primary" type="submit" color="primary" [disabled]="!TitleForm.form.valid">publish</button>
+      </div> 
+    </div>
+  </form>
+  </div>
+</div>
