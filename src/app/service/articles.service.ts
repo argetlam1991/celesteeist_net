@@ -12,7 +12,7 @@ export class ArticlesService {
   assigned_id = 0;
 
   dummy_articles: Article[] = [{
-      article_id: 1,
+      article_id: '1',
       title: 'dummy_1',
       author: 'celesteeist',
       date: 1234567890,
@@ -22,7 +22,7 @@ export class ArticlesService {
   constructor(private http: HttpClient,
               private auth: AuthenticationService) { }
 
-  getArticle(article_id: number) {
+  getArticle(article_id: string) {
     //return this.http.get<any>('https://ur15zg4ns3.execute-api.ap-northeast-1.amazonaws.com/dev/article');
     for (const article of this.dummy_articles) {
       if (article.article_id === article_id) {
@@ -38,8 +38,9 @@ export class ArticlesService {
 
   createArticle(title, content) {
     const today = Date.now();
+    const id = today.toString() + title + this.auth.getAuthenticatedUser().getUsername()
     const article: Article = {
-      article_id: this.assigned_id + 1,
+      article_id: id,
       title: title,
       author: this.auth.getAuthenticatedUser().getUsername(),
       date: today,
@@ -49,8 +50,9 @@ export class ArticlesService {
     this.assigned_id += 1;
   }
 
-  updateArticle(id, title, content) {
-
+  updateArticle(article) {
+    let itemIndex = this.dummy_articles.findIndex(item => item.article_id == article.article_id)
+    this.dummy_articles[itemIndex] = article
   }
 
 }

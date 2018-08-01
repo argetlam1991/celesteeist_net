@@ -38,14 +38,22 @@ export class ArticleEditorComponent implements OnInit {
   }
 
   getArticle() {
-    const article_id = Number(this.route.snapshot.paramMap.get('article_id'));
+    const article_id = this.route.snapshot.paramMap.get('article_id');
     if (article_id) {
       this.article = this.articles.getArticle(article_id);
     }
   }
 
   submit() {
-    this.articles.createArticle(this.title, this.editor.root.innerHTML);
+    if (this.article) {
+      this.article.title = this.title;
+      this.article.content = this.editor.root.innerHTML
+      this.article.date = Date.now();
+      this.articles.updateArticle(this.article);
+    } else {
+      this.articles.createArticle(this.title, this.editor.root.innerHTML);
+    }
+
     this._router.navigateByUrl('/article-list');
   }
 
