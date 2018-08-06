@@ -27,7 +27,14 @@ export class ArticleComponent implements OnInit {
 
   getArticle() {
     const article_id = this.route.snapshot.paramMap.get('article_id');
-    this.article = this.articles.getArticle(article_id);
+    //this.article = this.articles.getArticle(article_id);
+    this.articles.getArticle(article_id).subscribe(data => {
+      console.log(data);
+      this.article = data;
+    },
+    error => {
+      console.log(error);
+    });
   }
 
   checkIsAdmin() {

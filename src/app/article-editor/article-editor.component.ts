@@ -25,9 +25,6 @@ export class ArticleEditorComponent implements OnInit {
 
   ngOnInit() {
     this.getArticle();
-    if (this.article) {
-      this.title = this.article.title;
-    }
   }
 
   editorOnInit(event) {
@@ -39,22 +36,45 @@ export class ArticleEditorComponent implements OnInit {
 
   getArticle() {
     const article_id = this.route.snapshot.paramMap.get('article_id');
-    if (article_id) {
-      this.article = this.articles.getArticle(article_id);
-    }
+    //this.article = this.articles.getArticle(article_id);
+    this.articles.getArticle(article_id).subscribe(data => {
+      console.log(data);
+      if (data){
+        this.article = data;
+        this.title = this.article.title;
+        this.editor.clipboard.dangerouslyPasteHTML(0, this.article.content);
+      }
+    },
+    error => {
+      console.log(error);
+    });
   }
 
   submit() {
+    console.log(this.article)
     if (this.article) {
+      console.log('update article');
       this.article.title = this.title;
-      this.article.content = this.editor.root.innerHTML
-      this.article.date = Date.now();
-      this.articles.updateArticle(this.article);
+      this.article.content = this.editor.root.innerHTML;
+      this.articles.updateArticle(this.article).subscribe(data => {
+        console.log(data);
+        this._router.navigateByUrl('/article-list');
+      },
+      error => {
+        console.log(error);
+        this._router.navigateByUrl('/article-list');
+      });
     } else {
-      this.articles.createArticle(this.title, this.editor.root.innerHTML);
+      console.log('create article')
+      this.articles.createArticle(this.title, this.editor.root.innerHTML).subscribe(data => {
+        console.log(data);
+        this._router.navigateByUrl('/article-list');
+      },
+      error => {
+        console.log(error);
+        this._router.navigateByUrl('/article-list');
+      });
     }
-
-    this._router.navigateByUrl('/article-list');
   }
 
 }

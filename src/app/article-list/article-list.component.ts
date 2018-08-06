@@ -25,14 +25,13 @@ export class ArticleListComponent implements OnInit {
     } else {
       this.username = 'Guest';
     }
-    this.articles_list = this.articles.getAllArticles();
-    /*
+    //this.articles_list = this.articles.getAllArticles();
     this.articles.getAllArticles().subscribe(data => {
       console.log(data);
-      this.dummy_article = data;
+      this.articles_list = data;
     },
     error => {
       console.log(error);
-    }); */
+    });
   }
 }
