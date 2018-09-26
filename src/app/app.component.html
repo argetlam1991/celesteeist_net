@@ -1,6 +1,6 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <mat-toolbar color='primary'>
-  <span>Welcome to {{title}}!</span>
+  <button mat-button [routerLink]="['/']">Welcome to {{title}}!</button>
   <span class="fill-remain-space"></span>
   <div *ngIf="!isLogin()">
     <a mat-button [routerLink]="['/login']">login</a>
