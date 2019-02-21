@@ -6,6 +6,7 @@
    <mat-card-subtitle>Updated on: {{ article.update_date | date:"yyyy-M-d H:m:s" }}</mat-card-subtitle>
    <mat-card-content>
      <div innerHTML="{{article.content}}"></div>
+     <div>{{acc?acc.print():""}}</div>
    </mat-card-content>
    <br>
    <mat-card-footer>
